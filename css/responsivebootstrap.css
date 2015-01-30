@@ -633,13 +633,11 @@
 
 @media (min-width: 768px) {
     .filters-footer {
-        width:60%;
-        position: fixed;
+        width: 100%;
         -webkit-transform: translateZ(1px);
         bottom: 0;
         background-color: #fff;
-        padding: 20px
-    }
+        padding: 20px}
 }
 
 .hide-map .filters-footer {
