@@ -1,5 +1,5 @@
 <?php
-
+// TODO 8: Where are the code in migrations to populate the database? We need migrations to synchronise database changes
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 

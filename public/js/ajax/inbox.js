@@ -16,12 +16,16 @@ var restURL = "";
 function buildRestURL()
 {
     restURL = window.location.href.replace("/inbox/", "/rest/inbox/");
+    // TODO 1: restURL should be constructed like this:
+    // TODO 1 (cont'd): localhost = $.load("appConfig.js"); // create an appConfig file that declares var localhost = "http://54.xx.xx.xx
+    // TODO 1 (cont'd): restURL = localhost + "/rest/inbox;
 }
 
 function setDataToHTML()
 {
     //Load top message
     var strTopMessage = '';
+    // TODO 2: move these templates to an external file. Please refer to the email I sent you with the subject "How to bring in external HTML to render using Moustache"
     var tplLeftMessage = '<li class="thread-list-item" id="question2_post_336035933">\n\
                      <div class="row row-condensed">\n\
                         <div class="col-sm-2 col-md-1 text-center">\n\
@@ -142,7 +146,9 @@ function setDataToHTML()
                        </div>\n\
                     </div>\n\
                  </li>';
-    
+
+    // TODO 6: We don't need to split messages into topMessages and bottomMessages. Can you merge the two and simply have a messages div?
+    // TODO 6 (cont'd): You should modify the JSON response as well to return only messages in the JSON
     for (var i = 0; i < topMessages.length; i++)
     {
         var message = topMessages[i];
@@ -155,6 +161,22 @@ function setDataToHTML()
     for (var i = 0; i < bottomMessages.length; i++)
     {
         var message = bottomMessages[i];
+        // TODO 3: What is main_user == 1? Is 1 userId? If 1 means userId then you shouldn't hard-code the userId in the code
+        // TODO 3 (cont'd): In any case, why do you need main_user anyway? You can use the "fromuid" to determine if that message is sent by the main user
+        // TODO 3 (cont'd): You also don't need "user_name", you can derive that from the "fromuid"
+        //{
+        //    "msgid": 1,
+        //    "fromuid": 1,
+        //    "touid": 2,
+        //    "creation_date": 1423338555,
+        //    "sent_date": 1423338555,
+        //    "subject": "New Conversation",
+        //    "content": "hi",
+        //    "is_read": 0,
+        //    "main_user": 0, <- DELETE THIS
+        //    "user_name": "tom", <- DELETE THIS
+        //    "sent_date_str": "02/07/2015 07:49 PM"
+        //}
         if (message['main_user'] == 1)
         {
             strBottomMessage += Mustache.to_html(tplLeftMessage, message);
@@ -179,6 +201,7 @@ function setDataToHTML()
 
 function ajaxGetData()
 {
+    // TODO 4: Please make the line below into a function (e.g. showSpinner()). And then make all the references refer to the showSpinner class()
     document.getElementById("gspinner").style.display = "block";
     $.ajax({
         type: "GET",
@@ -198,11 +221,11 @@ function ajaxGetData()
                 {
                     alert(data.message);
                 }
-                document.getElementById("gspinner").style.display = "none";
+                document.getElementById("gspinner").style.display = "none"; // TODO 4: same as above, but hideSpinner()
             })
             .fail(function(jqXHR, textStatus) {
                 alert("Request failed: " + textStatus);
-                document.getElementById("gspinner").style.display = "none";
+                document.getElementById("gspinner").style.display = "none"; // TODO 4: same as above
             });
 }
 
@@ -214,7 +237,7 @@ function ajaxPostData()
         alert("Empty content!");
         return;
     }
-    document.getElementById("gspinner").style.display = "block";
+    document.getElementById("gspinner").style.display = "block"; // TODO 4: same as above, but hideSpinner()
     $("#buttonSend").attr("disabled", "disabled");
     $.ajax({
         type: "POST",
@@ -223,7 +246,8 @@ function ajaxPostData()
         data: {dataType: "json", content: text}
     })
             .done(function(data) {
-                if (data.code == "202" || data.code == 202)
+            // TODO 5: Delete this if and the data.code field at the server endpoint. HTTP status code 202 is part of a response object. You don't need to create a response code manually. Have a read on the internet about HTTP response codes.
+            if (data.code == "202" || data.code == 202)
                 {
                     originUser = data.data.originUser;
                     desUser = data.data.desUser;
@@ -248,3 +272,5 @@ $(function() {
     buildRestURL();
     ajaxGetData();
 });
+
+// TODO 7: When I click "Send message" button, everything appears twice. Why? Look at http://54.76.93.163/inbox/1/2. The recent messages posted using ajaxPostData() have been posted twice.
