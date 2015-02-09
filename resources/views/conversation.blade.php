@@ -5,6 +5,9 @@
       <meta charset="utf-8">
       <link href="{{URL::asset('css/bootstrap.css')}}" media="all" rel="stylesheet" type="text/css">
       <link href="{{URL::asset('css/inbox.css')}}" media="all" rel="stylesheet" type="text/css">
+      <script type="text/javascript" src="{{URL::asset('js/jquery-1.11.2.min.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('js/jquery-ui-1.11.2.custom/jquery-ui.min.js')}}"></script>
+      <script src="{{URL::asset('js/mustache.min.js')}}"></script>
       <script src="{{URL::asset('js/ajax/inbox.js')}}"></script>
       <style>
          .cbp-tm-submenu
@@ -15,6 +18,16 @@
          {
          display:  block;
          }
+         .spinner {
+            background: url("{{URL::asset('img/loading.gif')}}") no-repeat scroll 50% 50% transparent;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #000;
+            color: #FFF;
+        }
       </style>
    </head>
    <body class="no_wiggle_webkit" style="top: 0px;">
@@ -159,10 +172,11 @@
                                     <input type="hidden" name="template" value="">
                                     <textarea class="row-space-2 input-resize-vert" id="message_inquiry" name="content" placeholder="Add a personal message here." style="overflow: hidden; word-wrap: break-word; resize: none; height: 40px;"></textarea>
                                     <div class="pull-right">
-                                        <input type="button" class="btn btn-primary" onclick="ajaxPostData()" value="Send Message">
+                                        <input type="button" class="btn btn-primary" onclick="ajaxPostData()" value="Send Message" id="buttonSend">
                                     </div>
                                     <div class="pull-left">
                                     </div>
+                                    <div style="clear:both"></div>
                               </div>
                               
                            </div>
@@ -1010,5 +1024,6 @@
             </div>
          </div>
       </div>
+      <div class="spinner" id="gspinner" style="opacity: 0.6; display: none;"></div>
    </body>
 </html>

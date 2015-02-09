@@ -28,8 +28,8 @@ Route::get('/newplace', function()
 
 Route::get('/inbox/{uid1?}/{uid2?}',array('as' => 'inbox', 'uses' => 'InboxsController@index'));
 
-Route::post('/inbox/{userid1?}/{userid2?}', array('as' => 'messages.store', 'uses' => 'InboxsController@store'));
-
+Route::get('/rest/inbox/{uid1?}/{uid2?}', array('as' => 'restInboxGet', 'uses' => 'InboxsController@jsonGet'));
+Route::post('/rest/inbox/{uid1?}/{uid2?}', array('as' => 'restInboxPost', 'uses' => 'InboxsController@jsonPost'));
 
 Route::get('/searchs', function()
 {
