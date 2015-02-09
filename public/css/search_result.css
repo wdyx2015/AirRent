@@ -1,0 +1,35 @@
+li.browse-container
+{
+    overflow: visible;
+}
+li.browse-container ul.tooltip
+{
+    display:  none;
+}
+li:hover ul.tooltip
+{
+    display:  block;
+    border: 1px solid #EFEFEF;
+}
+
+.condition-hide
+{
+    display: none !important;
+}
+
+.condition-show
+{
+    display: block !important;
+}
+
+.search-results {
+	padding: 10px 15px;
+}
+
+.search-results img {
+	width: 100%;
+}
+
+.search-results > .row {
+	margin: 10px 0;
+}
